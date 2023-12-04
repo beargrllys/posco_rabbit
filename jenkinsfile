@@ -14,10 +14,8 @@ pipeline {
         stage('build & push docker image') {
             steps {
                 script {
-                    dir('/home/ubuntu/posco_rabbit') {
-                        // Docker 이미지 빌드
-                        sh 'docker build -t posco-rabbit .'
-                    }
+                    // Docker 이미지 빌드
+                    sh 'docker build -t posco-rabbit .'
                 }
                 script {
                     // Docker Hub에 푸쉬
