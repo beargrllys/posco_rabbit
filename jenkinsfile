@@ -31,7 +31,7 @@ pipeline {
                     // Docker 컨테이너 확인
                     sh '''
                     if docker ps -a | grep -q 'posco-rabbit'; then
-                        'docker rm -f posco-rabbit'
+                        docker rm -f posco-rabbit
                     fi
                     '''
                 }
