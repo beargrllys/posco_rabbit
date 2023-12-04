@@ -31,7 +31,10 @@ pipeline {
                     // Docker 컨테이너 확인
                     sh '''
                     if docker ps -a | grep -q 'posco-rabbit'; then
+                        echo "posco-rabbit 컨테이너가 존재합니다. 컨테이너를 삭제합니다."
                         docker rm -f posco-rabbit
+                    else
+                        echo "posco-rabbit 컨테이너가 존재하지 않습니다."
                     fi
                     '''
                 }
