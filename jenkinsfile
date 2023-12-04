@@ -7,13 +7,8 @@ pipeline {
     stages {
         stage('pull repository') {
             steps {
-                if (fileExists('posco_rabbit')) {
-                        dir('posco_rabbit') {
-                            sh 'git pull origin master'
-                        }
-                } else {
-                    sh 'git clone https://github.com/beargrllys/posco_rabbit.git'
-                }
+                // Git 레포지토리를 클론합니다.
+                git 'https://github.com/beargrllys/posco_rabbit.git'
             }
         }
         stage('build & push docker image') {
