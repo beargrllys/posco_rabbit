@@ -5,7 +5,7 @@ FROM tomcat:9.0.1-jre8-alpine
 WORKDIR /usr/local/tomcat
 
 # JSP 프로젝트를 Tomcat의 webapps 디렉토리로 복사
-COPY ./posco_rabbit/src/main/webapp ./webapps/
+COPY ./posco_rabbit/src/main/webapp/index.jsp ./webapps/ROOT/index.jsp
 
 # Tomcat 서버 실행
 CMD ["catalina.sh", "run"]
