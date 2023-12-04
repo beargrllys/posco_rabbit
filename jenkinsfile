@@ -28,6 +28,7 @@ pipeline {
         stage('deploy image') {
             steps {
                 script {
+                    sh 'docker rm -f posco-rabbit'
                     // Docker 컨테이너 실행
                     sh 'docker run -d -p 9090:8080 posco-rabbit'
                 }
