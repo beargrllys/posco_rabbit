@@ -28,8 +28,14 @@ pipeline {
         stage('deploy image') {
             steps {
                 script {
-                    sh 'docker rm -f posco-rabbit'
-                    // Docker 컨테이너 실행
+                    // Docker 컨테이너 확인
+                    sh '''
+                    if docker ps -a | grep -q 'posco-rabbit'; then
+                        'docker rm -f posco-rabbit'
+                    fi
+                    '''
+                }
+                script {
                     sh 'docker run -d -p 9090:8080 posco-rabbit'
                 }
             }
