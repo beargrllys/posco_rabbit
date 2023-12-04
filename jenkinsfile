@@ -30,16 +30,16 @@ pipeline {
                 script {
                     // Docker 컨테이너 확인
                     sh '''
-                    if docker ps -a | grep -q 'posco-rabbit'; then
-                        echo "posco-rabbit 컨테이너가 존재합니다. 컨테이너를 삭제합니다."
-                        docker rm -f posco-rabbit
+                    if docker ps -a | grep -q 'posco-rabbit-inst'; then
+                        echo "posco-rabbit-inst 컨테이너가 존재합니다. 컨테이너를 삭제합니다."
+                        docker rm -f posco-rabbit-inst
                     else
-                        echo "posco-rabbit 컨테이너가 존재하지 않습니다."
+                        echo "posco-rabbit-inst 컨테이너가 존재하지 않습니다."
                     fi
                     '''
                 }
                 script {
-                    sh 'docker run -d -p 9090:8080 --name posco-rabbit'
+                    sh 'docker run -d --name posco-rabbit-inst -p 9090:8080 posco-rabbit'
                 }
             }
         }
