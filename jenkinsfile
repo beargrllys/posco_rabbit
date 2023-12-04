@@ -1,20 +1,38 @@
 pipeline {
     agent any
+    environment {
+        // Docker Hub의 사용자 이름과 비밀번호를 Jenkins 자격 증명 시스템에서 가져옴
+        DOCKER_CREDENTIALS = credentials('dckr_pat_VXLpCzI_De-YUKcEisJSuy5DsFY')
+    }
     stages {
-        stage('build') {
+        stage('pull repository') {
             steps {
-                echo 'building the application22222...'
+                dir('/home/ubuntu/posco_rabbit') {
+                    sh 'git pull origin master'
+                }
             }
         }
-        stage('test') {
+        stage('build & push docker image') {
             steps {
-                echo 'testing the application...'
+                script {
+                    dir('/home/ubuntu/posco_rabbit') {
+                        // Docker 이미지 빌드
+                        sh 'docker build -t posco-rabbit .'
+                    }
+                }
+                script {
+                    // Docker Hub에 푸쉬
+                    sh "echo ${DOCKER_CREDENTIALS_PSW} | docker login -u ${DOCKER_CREDENTIALS_USR} --password-stdin"
+                    sh 'docker tag my-app:latest my-dockerhub-username/posco-rabbit:latest'
+                    sh 'docker push my-dockerhub-username/posco-rabbit:latest'
+                }
             }
         }
-        stage('deploy') {
-            steps {
-                echo 'deploying the application...'
-            }
+        stage('deploy image') {
+            script {
+                    // Docker 컨테이너 실행
+                    sh 'docker run -d -p 9090:8080 posco-rabbit'
+                }
         }
     }
 }
