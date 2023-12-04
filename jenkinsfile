@@ -20,8 +20,8 @@ pipeline {
                 script {
                     // Docker Hub에 푸쉬
                     sh "echo ${DOCKER_CREDENTIALS_PSW} | docker login -u ${DOCKER_CREDENTIALS_USR} --password-stdin"
-                    sh 'docker tag my-app:latest my-dockerhub-username/posco-rabbit:latest'
-                    sh 'docker push my-dockerhub-username/posco-rabbit:latest'
+                    sh 'docker tag posco-rabbit:latest js7744/posco-rabbit:latest'
+                    sh 'docker push js7744/posco-rabbit:latest'
                 }
             }
         }
